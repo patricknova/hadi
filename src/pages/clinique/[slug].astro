@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { supabase } from '../../lib/supabase';
+import PhotoCarousel from '../../components/PhotoCarousel.astro';
 
 export async function getStaticPaths() {
   const { data: clinics } = await supabase
@@ -66,6 +67,8 @@ const specialties = formatSpecialties(clinic.specialites);
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <!-- Main Content -->
       <div class="lg:col-span-2 space-y-8">
+        <PhotoCarousel photos={clinic.google_photos || []} clinicName={clinic.nom} />
+        
         <header class="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
           <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>

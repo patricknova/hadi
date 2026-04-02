@@ -46,6 +46,16 @@
 - [x] Système de bannières publicitaires dynamiques (Table campaigns)
 - [x] Interface de création et modification de campagnes via Admin
 
+### ✅ Jalon 6 : Phase 3 - Blog IA & Camerounisation (Terminé)
+- [x] Création de la table `blog_posts` dans Supabase
+- [x] Développement du moteur de génération d'articles via Gemini 2.5 Flash
+- [x] Implémentation du "Prompt de Camerounisation" (Quartiers, Aliments, FCFA)
+- [x] Création du système de recommandation automatique de cliniques sous les articles
+- [x] Mise en place du scheduler pour 5 articles par jour
+- [x] Génération des pages dynamiques `/blog/[slug]` dans Astro
+- [x] Création de la page liste `/blog`
+- [x] Intégration du carousel de photos Google Places sur les fiches cliniques
+
 ---
 
 ## 🛠️ Fonctionnalités Réalisées

@@ -1,0 +1,71 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { supabase } from '../../lib/supabase';
+
+// Fetch published posts
+const { data: posts, error } = await supabase
+  .from('blog_posts')
+  .select('*')
+  .lte('published_at', new Date().toISOString())
+  .order('published_at', { ascending: false });
+
+if (error) {
+  console.error('Error fetching posts:', error);
+}
+---
+
+<Layout title="Blog Santé Douala - Conseils & Tendances Locales" description="Découvrez nos articles de santé adaptés au contexte camerounais : nutrition, prévention et conseils d'experts à Douala.">
+  <main class="max-w-6xl mx-auto px-4 py-12">
+    <header class="text-center mb-16">
+      <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
+        Le Blog <span class="text-blue-600">Santé Douala</span>
+      </h1>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Des conseils médicaux experts, ancrés dans la réalité de Douala et du Cameroun. 
+        Pour une santé mieux comprise, au quotidien.
+      </p>
+    </header>
+
+    {posts && posts.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {posts.map((post) => (
+          <article class="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group">
+            <div class="aspect-video bg-gray-100 relative overflow-hidden">
+              <img 
+                src={`https://source.unsplash.com/featured/800x600?${post.main_image || 'health'}`} 
+                alt={post.title}
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+              <span class="absolute top-4 left-4 bg-blue-600 text-white text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider z-10">
+                {post.specialty_tag || 'Santé'}
+              </span>
+            </div>
+            
+            <div class="p-8 flex flex-col flex-1">
+              <h2 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition">
+                <a href={`/blog/${post.slug}`}>{post.title}</a>
+              </h2>
+              <p class="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-3">
+                {post.excerpt}
+              </p>
+              
+              <div class="mt-auto pt-6 border-t border-gray-50 flex items-center justify-between">
+                <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                  {new Date(post.published_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
+                </span>
+                <a href={`/blog/${post.slug}`} class="text-blue-600 font-bold text-sm flex items-center gap-1 hover:gap-2 transition-all">
+                  Lire l'article <span>→</span>
+                </a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="text-center py-24 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
+        <p class="text-gray-500 italic">Nos rédacteurs préparent de nouveaux articles. Revenez très bientôt !</p>
+      </div>
+    )}
+  </main>
+</Layout>

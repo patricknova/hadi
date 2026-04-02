@@ -1,0 +1,57 @@
+---
+interface Props {
+  photos: string[];
+  clinicName: string;
+}
+
+const { photos, clinicName } = Astro.props;
+const googleApiKey = import.meta.env.GOOGLE_PLACES_API_KEY;
+
+// Generate Google Places Photo URLs
+const photoUrls = photos.map(photoName => 
+  `https://places.googleapis.com/v1/${photoName}/media?key=${googleApiKey}&maxHeightPx=800`
+);
+---
+
+<div class="relative group">
+  {photoUrls.length > 0 ? (
+    <div class="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide gap-4 pb-4">
+      {photoUrls.map((url, index) => (
+        <div class="flex-none w-full md:w-3/4 lg:w-2/3 snap-center">
+          <div class="aspect-video rounded-3xl overflow-hidden bg-gray-100 border border-gray-100 shadow-sm">
+            <img 
+              src={url} 
+              alt={`${clinicName} - Photo ${index + 1}`}
+              class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+              loading={index === 0 ? "eager" : "lazy"}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <div class="aspect-video rounded-3xl bg-gray-50 border-2 border-dashed border-gray-200 flex flex-col items-center justify-center text-gray-400 p-8 text-center">
+      <span class="text-4xl mb-2">📸</span>
+      <p class="font-medium">Aucune photo réelle disponible pour le moment.</p>
+      <p class="text-sm">Vous travaillez ici ? Ajoutez des photos sur Google Maps.</p>
+    </div>
+  )}
+  
+  {photoUrls.length > 1 && (
+    <div class="flex justify-center gap-2 mt-2">
+      {photoUrls.map((_, i) => (
+        <div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div>
+      ))}
+    </div>
+  )}
+</div>
+
+<style>
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>

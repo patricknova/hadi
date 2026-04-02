@@ -1,0 +1,133 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { supabase } from '../../lib/supabase';
+import RelatedClinics from '../../components/RelatedClinics.astro';
+
+export async function getStaticPaths() {
+  const { data: posts } = await supabase
+    .from('blog_posts')
+    .select('slug');
+
+  return posts?.map((post) => ({
+    params: { slug: post.slug },
+  })) || [];
+}
+
+const { slug } = Astro.params;
+
+// Fetch full post data
+const { data: post, error } = await supabase
+  .from('blog_posts')
+  .select('*')
+  .eq('slug', slug)
+  .single();
+
+if (error || !post) {
+  return Astro.redirect('/404');
+}
+---
+
+<Layout 
+  title={post.title} 
+  description={post.meta_description || post.excerpt}
+>
+  <article class="max-w-4xl mx-auto px-4 py-12">
+    <!-- Breadcrumb -->
+    <nav class="flex text-sm text-gray-500 mb-8" aria-label="Breadcrumb">
+      <ol class="inline-flex items-center space-x-1 md:space-x-3">
+        <li class="inline-flex items-center">
+          <a href="/" class="hover:text-blue-600 transition">Accueil</a>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <span class="mx-2 text-gray-400">/</span>
+            <a href="/blog" class="hover:text-blue-600 transition">Blog</a>
+          </div>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <span class="mx-2 text-gray-400">/</span>
+            <span class="font-medium text-gray-800 line-clamp-1">{post.title}</span>
+          </div>
+        </li>
+      </ol>
+    </nav>
+
+    <header class="mb-12">
+      <div class="aspect-video md:aspect-[21/9] rounded-3xl overflow-hidden mb-8 relative group">
+        <img 
+          src={`https://source.unsplash.com/featured/1200x600?${post.main_image || 'health'}`} 
+          alt={post.title}
+          class="w-full h-full object-cover transition duration-700 group-hover:scale-105"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+        <div class="absolute bottom-8 left-8 right-8">
+          <div class="flex items-center gap-4 mb-4">
+            <span class="bg-blue-600 text-white text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider">
+              {post.specialty_tag || 'Santé'}
+            </span>
+            <time class="text-sm font-bold text-gray-200 uppercase tracking-widest drop-shadow-md">
+              {new Date(post.published_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+            </time>
+          </div>
+          <h1 class="text-3xl md:text-5xl font-extrabold text-white tracking-tight leading-tight drop-shadow-lg">
+            {post.title}
+          </h1>
+        </div>
+      </div>
+      
+      <div class="p-6 bg-blue-50/50 rounded-2xl border-l-4 border-blue-600 italic text-gray-700">
+        {post.excerpt}
+      </div>
+    </header>
+
+    <div class="prose prose-lg prose-blue max-w-none text-gray-800 leading-relaxed 
+                prose-headings:text-gray-900 prose-headings:font-extrabold 
+                prose-p:mb-6 prose-ul:mb-6 prose-li:mb-2 prose-strong:text-blue-700">
+      <Fragment set:html={post.content} />
+    </div>
+
+    <!-- Recommendations Synergy -->
+    <RelatedClinics specialtyTag={post.specialty_tag} />
+
+    <footer class="mt-16 pt-8 border-t border-gray-100 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-xl">✍️</div>
+        <div>
+          <p class="font-bold text-gray-900 leading-none">Rédaction SantéDouala</p>
+          <p class="text-sm text-gray-500 mt-1">Écrit par nos experts médicaux locaux</p>
+        </div>
+      </div>
+      
+      <div class="flex gap-4">
+        <button class="px-6 py-2 bg-gray-100 text-gray-700 rounded-xl font-bold text-sm hover:bg-gray-200 transition">
+          Partager l'article
+        </button>
+      </div>
+    </footer>
+  </article>
+</Layout>
+
+<style is:global>
+  /* Ensure the generated HTML content looks great */
+  .prose h2 {
+    font-size: 1.875rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
+    color: #111827;
+  }
+  .prose h3 {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #1a56a0;
+  }
+  .prose p {
+    margin-bottom: 1.5rem;
+  }
+  .prose ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+</style>

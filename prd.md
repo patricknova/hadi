@@ -28,7 +28,13 @@ Une plateforme de directory médical en **programmatic SEO** construite avec **A
 ### 2.2 Module SEO Programmatic
 - Sitemap auto-généré, robots.txt optimisé, balises meta uniques, Open Graph, images WebP.
 
-### 2.3 Module Analytique Marketing
+### 2.3 Module Blog IA (Camerounisation) - Phase 3
+- **Génération Automatique :** 5 articles de santé par jour basés sur les tendances Google Trends Cameroun.
+- **Moteur Gemini 1.5 Flash :** Prompts spécifiques pour l'ancrage local (quartiers de Douala, alimentation locale, coûts en FCFA).
+- **Synergie Annuaire :** Chaque article recommande automatiquement 2-3 cliniques de l'annuaire liées à la spécialité traitée.
+- **Stratégie "Stealth SEO" :** Publication échelonnée, contenu structuré (H1-H3, listes), et maillage interne fort pour éviter les pénalités IA.
+
+### 2.4 Module Analytique Marketing
 - Tracking des interactions en temps réel dans Supabase.
 - **Dashboard Admin :** Pages vues, clics totaux, taux de contact, classement des établissements, export CSV.
 
