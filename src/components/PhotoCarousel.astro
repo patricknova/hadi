@@ -9,7 +9,9 @@ const googleApiKey = import.meta.env.GOOGLE_PLACES_API_KEY;
 
 // Generate Google Places Photo URLs
 const photoUrls = photos.map(photoName => 
-  `https://places.googleapis.com/v1/${photoName}/media?key=${googleApiKey}&maxHeightPx=800`
+  googleApiKey 
+    ? `https://places.googleapis.com/v1/${photoName}/media?key=${googleApiKey}&maxHeightPx=800`
+    : `https://loremflickr.com/800/600/hospital,clinic`
 );
 ---
 
@@ -24,6 +26,7 @@ const photoUrls = photos.map(photoName =>
               alt={`${clinicName} - Photo ${index + 1}`}
               class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
               loading={index === 0 ? "eager" : "lazy"}
+              onerror="this.src='https://loremflickr.com/800/600/hospital,building'"
             />
           </div>
         </div>

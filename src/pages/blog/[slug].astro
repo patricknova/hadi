@@ -25,6 +25,27 @@ const { data: post, error } = await supabase
 if (error || !post) {
   return Astro.redirect('/404');
 }
+
+// Pool d'images médicales ultra-fiables (Unsplash IDs simplifiés)
+const imagePool = [
+  "1505751172107-5962200a4883",
+  "1512678080530-7760d81faba6",
+  "1519494026892-80bbd2d6fd0d",
+  "1538108149393-fdfd8169446d",
+  "1551076805-e1869033e561",
+  "1576091160550-2173bdd99611",
+  "1584622650111-993a426fbf0a",
+  "1502740479734-55023fe73c5b",
+  "1526256262350-7da7584cf5eb",
+  "1551601651-2a8555f1a136"
+];
+
+function getImageUrl(id: string, width = 1200) {
+  const hash = id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const index = hash % imagePool.length;
+  const photoId = imagePool[index];
+  return `https://images.unsplash.com/photo-${photoId}?auto=format&fit=crop&w=${width}&q=80`;
+}
 ---
 
 <Layout 
@@ -54,11 +75,15 @@ if (error || !post) {
     </nav>
 
     <header class="mb-12">
-      <div class="aspect-video md:aspect-[21/9] rounded-3xl overflow-hidden mb-8 relative group shadow-2xl">
+      <div class="aspect-video md:aspect-[21/9] rounded-3xl overflow-hidden mb-8 relative group shadow-2xl bg-gray-100">
         <img 
-          src={`https://loremflickr.com/1200/600/${encodeURIComponent(post.main_image || 'health,hospital')},africa/all`} 
+          src={post.main_image.startsWith('http') ? post.main_image : getImageUrl(post.id, 1200)} 
           alt={post.title}
           class="w-full h-full object-cover transition duration-700 group-hover:scale-105"
+          loading="lazy"
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"
+          onerror="this.onerror=null; this.src='https://loremflickr.com/1200/600/medical,africa';"
         />
         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
         <div class="absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10 md:right-10">

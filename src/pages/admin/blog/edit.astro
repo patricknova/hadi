@@ -1,0 +1,242 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+---
+
+<Layout title="Modifier l'image de l'article - Hadi Admin">
+  <div class="max-w-4xl mx-auto px-4 py-12">
+    <nav class="flex text-sm text-gray-500 mb-8" aria-label="Breadcrumb">
+      <ol class="inline-flex items-center space-x-1 md:space-x-3">
+        <li class="inline-flex items-center">
+          <a href="/admin" class="hover:text-blue-600 transition tracking-tight font-medium">Dashboard Admin</a>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <span class="mx-2 text-gray-400">/</span>
+            <a href="/admin/blog" class="hover:text-blue-600 transition tracking-tight font-medium">Gestion Blog</a>
+          </div>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <span class="mx-2 text-gray-400">/</span>
+            <span class="font-medium text-gray-800">Modifier l'Image</span>
+          </div>
+        </li>
+      </ol>
+    </nav>
+
+    <header class="mb-12">
+      <h1 class="text-4xl font-extrabold text-gray-900 tracking-tight">
+        Modifier l'image de <span class="text-blue-600">l'article</span>
+      </h1>
+      <p id="post-title" class="text-gray-500 mt-2 italic font-medium">Chargement du titre...</p>
+    </header>
+
+    <div id="loading-state" class="py-20 text-center animate-pulse">
+        <p class="text-2xl">⏳</p>
+        <p class="text-gray-400 mt-4 italic font-medium tracking-tight">Chargement de l'article...</p>
+    </div>
+
+    <div id="edit-container" class="hidden space-y-8">
+      <!-- Upload Section -->
+      <div class="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
+        <h2 class="text-xl font-bold text-gray-800 border-b border-gray-100 pb-2 mb-6">Option 1 : Téléverser une image</h2>
+        <div class="flex items-center justify-center w-full">
+            <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-3xl cursor-pointer bg-gray-50 hover:bg-gray-100 transition">
+                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                    <span class="text-4xl mb-4">☁️</span>
+                    <p class="mb-2 text-sm text-gray-500"><span class="font-bold">Cliquez pour uploader</span> ou glissez-déposez</p>
+                    <p class="text-xs text-gray-400">PNG, JPG ou WEBP (MAX. 2MB)</p>
+                </div>
+                <input id="dropzone-file" type="file" class="hidden" accept="image/*" />
+            </label>
+        </div>
+        <div id="upload-status" class="mt-4 hidden">
+            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                <div id="upload-progress" class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div>
+            </div>
+            <p id="status-text" class="text-xs text-center mt-2 text-blue-600 font-bold uppercase tracking-widest"></p>
+        </div>
+      </div>
+
+      <!-- Manual URL Section -->
+      <form id="edit-form" class="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 space-y-8">
+        <input type="hidden" id="post-id" name="id">
+        
+        <div class="space-y-6">
+          <h2 class="text-xl font-bold text-gray-800 border-b border-gray-100 pb-2">Option 2 : URL ou Mot-clé</h2>
+          
+          <div>
+            <label for="main_image" class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Source actuelle</label>
+            <input 
+              type="text" 
+              id="main_image" 
+              name="main_image" 
+              required 
+              class="w-full px-4 py-3 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-blue-500 transition" 
+              placeholder="https://images.unsplash.com/... ou 'dentiste, afrique'"
+            />
+          </div>
+
+          <div id="preview-container" class="space-y-4">
+            <h2 class="text-sm font-bold text-gray-400 uppercase tracking-widest">Aperçu du rendu</h2>
+            <div id="image-preview" class="aspect-video bg-gray-100 rounded-3xl overflow-hidden border border-gray-200 shadow-inner relative">
+              <p class="absolute inset-0 flex items-center justify-center text-gray-400 text-sm italic">Aucune image sélectionnée</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-8 border-t border-gray-100 flex justify-end gap-4">
+          <a href="/admin/blog" class="px-8 py-4 bg-gray-100 text-gray-600 rounded-xl font-bold hover:bg-gray-200 transition tracking-tight">Annuler</a>
+          <button type="submit" id="submit-btn" class="px-12 py-4 bg-blue-600 text-white rounded-xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition transform active:scale-95 flex items-center gap-3">
+            <span id="btn-text">Sauvegarder les modifications</span>
+            <span id="btn-loader" class="hidden animate-spin">⏳</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    import { supabase } from '../../../lib/supabase';
+
+    const form = document.getElementById('edit-form') as HTMLFormElement;
+    const container = document.getElementById('edit-container');
+    const loading = document.getElementById('loading-state');
+    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+    const btnText = document.getElementById('btn-text');
+    const btnLoader = document.getElementById('btn-loader');
+    const previewDiv = document.getElementById('image-preview');
+    const titleEl = document.getElementById('post-title');
+    const imageInput = document.getElementById('main_image') as HTMLInputElement;
+    const fileInput = document.getElementById('dropzone-file') as HTMLInputElement;
+    const uploadStatus = document.getElementById('upload-status');
+    const uploadProgress = document.getElementById('upload-progress');
+    const statusText = document.getElementById('status-text');
+
+    // Get ID from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const postId = urlParams.get('id');
+
+    if (!postId) {
+      window.location.href = '/admin/blog';
+    }
+
+    // Load initial data
+    async function loadPost() {
+      const { data, error } = await supabase
+        .from('blog_posts')
+        .select('*')
+        .eq('id', postId)
+        .single();
+
+      if (error || !data) {
+        alert('Erreur: Impossible de charger l\'article.');
+        window.location.href = '/admin/blog';
+        return;
+      }
+
+      // Populate form
+      (document.getElementById('post-id') as HTMLInputElement).value = data.id;
+      imageInput.value = data.main_image;
+      if (titleEl) titleEl.textContent = data.title;
+
+      // Update preview
+      updatePreview(data.main_image);
+
+      // Toggle UI
+      loading?.classList.add('hidden');
+      container?.classList.remove('hidden');
+    }
+
+    function updatePreview(val: string) {
+      if (!previewDiv) return;
+      if (val.startsWith('http')) {
+        previewDiv.innerHTML = `<img src="${val}" class="w-full h-full object-cover" />`;
+      } else {
+        previewDiv.innerHTML = `<div class="w-full h-full flex flex-col items-center justify-center text-gray-400 p-8 text-center bg-blue-50">
+          <span class="text-4xl mb-2">🎲</span>
+          <p class="font-bold">Image Aléatoire</p>
+          <p class="text-xs">Mot-clé: ${val}</p>
+        </div>`;
+      }
+    }
+
+    loadPost();
+
+    // Handle File Upload
+    fileInput?.addEventListener('change', async (e) => {
+        const file = (e.target as HTMLInputElement).files?.[0];
+        if (!file) return;
+
+        // Reset UI
+        uploadStatus?.classList.remove('hidden');
+        if (uploadProgress) uploadProgress.style.width = '0%';
+        if (statusText) statusText.textContent = 'Téléchargement...';
+
+        try {
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${postId}-${Math.random()}.${fileExt}`;
+            const filePath = `blog/${fileName}`;
+
+            // Upload to Supabase Storage (Bucket must be 'blog-images')
+            const { data, error: uploadError } = await supabase.storage
+                .from('blog-images')
+                .upload(filePath, file);
+
+            if (uploadError) throw uploadError;
+
+            // Get Public URL
+            const { data: { publicUrl } } = supabase.storage
+                .from('blog-images')
+                .getPublicUrl(filePath);
+
+            // Update Input and Preview
+            imageInput.value = publicUrl;
+            updatePreview(publicUrl);
+
+            if (uploadProgress) uploadProgress.style.width = '100%';
+            if (statusText) statusText.textContent = '✅ Terminé ! Cliquez sur Sauvegarder.';
+            
+        } catch (err: any) {
+            alert('Erreur d\'upload: ' + err.message + '\nAssurez-vous que le bucket "blog-images" existe dans Supabase et est public.');
+            uploadStatus?.classList.add('hidden');
+        }
+    });
+
+    // Preview live update
+    imageInput.addEventListener('input', (e) => {
+        updatePreview((e.target as HTMLInputElement).value);
+    });
+
+    // Handle form submit
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      if (submitBtn) submitBtn.disabled = true;
+      if (btnText) btnText.textContent = "Sauvegarde...";
+      btnLoader?.classList.remove('hidden');
+
+      const formData = new FormData(form);
+      const updatedData = {
+        main_image: formData.get('main_image'),
+      };
+
+      try {
+        const { error } = await supabase
+          .from('blog_posts')
+          .update(updatedData)
+          .eq('id', postId);
+
+        if (error) throw error;
+
+        alert('✅ Image mise à jour avec succès !');
+        window.location.href = '/admin/blog';
+      } catch (err: any) {
+        alert('❌ Erreur: ' + err.message);
+        if (submitBtn) submitBtn.disabled = false;
+        if (btnText) btnText.textContent = "Sauvegarder";
+        btnLoader?.classList.add('hidden');
+      }
+    });
+  </script>
+</Layout>

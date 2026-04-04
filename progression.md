@@ -55,9 +55,10 @@
 - [x] Génération des pages dynamiques `/blog/[slug]` dans Astro
 - [x] Création de la page liste `/blog`
 - [x] Intégration du carousel de photos Google Places sur les fiches cliniques
-- [x] Optimisation des images du blog : passage à LoremFlickr (Unsplash legacy replacement)
+- [x] Optimisation des images du blog : passage à un pool Unsplash Premium stable
 - [x] Implémentation d'images contextuelles auto-générées au sein du contenu des articles
 - [x] Amélioration visuelle du hero et des cartes du blog (shadows, gradients, typography)
+- [x] Interface Admin de gestion des images du blog (possibilité de définir des URLs personnalisées)
 
 ---
 
