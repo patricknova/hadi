@@ -7,13 +7,22 @@ interface Props {
 
 const { specialtyTag } = Astro.props;
 
-// Fetch 3 clinics matching the specialty
-// We'll search for clinics whose 'specialites' array contains the tag (case-insensitive)
-const { data: clinics } = await supabase
-  .from('clinics_enriched')
-  .select('nom, slug, rating, google_photos, quartier')
-  .order('rating', { ascending: false })
-  .limit(3);
+let clinics: any[] = [];
+
+try {
+  // Fetch 3 clinics matching the specialty
+  const { data, error } = await supabase
+    .from('clinics_enriched')
+    .select('nom, slug, rating, google_photos, quartier')
+    .order('rating', { ascending: false })
+    .limit(3);
+  
+  if (!error) {
+    clinics = data || [];
+  }
+} catch (err) {
+  console.error('RelatedClinics fetch error:', err);
+}
 
 const googleApiKey = import.meta.env.GOOGLE_PLACES_API_KEY;
 ---
