@@ -7,7 +7,7 @@ import vercel from '@astrojs/vercel';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://hadi.cm',
-  output: 'hybrid',
+  output: 'static',
   adapter: vercel(),
   integrations: [sitemap()],
   vite: {
