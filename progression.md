@@ -73,6 +73,8 @@
 
 - *05/04/2026* : Génération de 5 articles basés sur les tendances Google Trends (Polio, Mpox Littoral, Santé Numérique 2026, Cardiologie Douala, Projet Cure 2). Articles camerounisés et publiés avec succès.
 - *07/04/2026* : Correction des crashs Vercel (FUNCTION_INVOCATION_FAILED) via l'ajout de try/catch sur les routes SSR et sécurisation des agrégations analytics. Création de la page 404.
+- *08/04/2026* : Mise à jour du token de validation Google Search Console (`google-site-verification`) dans le Layout de base.
+
 
 ---
 
