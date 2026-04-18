@@ -36,12 +36,12 @@
 			"dest": "_render"
 		},
 		{
-			"src": "^/404/?$",
+			"src": "^/quartier/([^/]+?)/?$",
 			"dest": "_render"
 		},
 		{
 			"src": "^/.*$",
-			"dest": "_render",
+			"dest": "/404.html",
 			"status": 404
 		}
 	]

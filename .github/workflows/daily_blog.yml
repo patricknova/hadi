@@ -1,0 +1,31 @@
+name: Daily Blog Generation
+
+on:
+  schedule:
+    # 19:00 UTC correspond à 20:00 à Douala/Yaoundé
+    - cron: '0 19 * * *'
+  workflow_dispatch: # Permet de lancer manuellement depuis l'onglet Actions de GitHub
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run autonomous blog script
+        env:
+          PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
+          PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: npx tsx src/scripts/autonomous_blog.ts

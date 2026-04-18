@@ -8,11 +8,11 @@ const geminiKey = process.env.GEMINI_API_KEY!;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const TOPICS = [
-  "Polio au Cameroun : Tout savoir sur la grande campagne de vaccination du 23 au 26 avril 2026",
-  "Mpox (Variole du Singe) dans le Littoral : Les gestes barrières à adopter d'urgence à Douala",
-  "Révolution Numérique : Ce que le Plan National de Santé 2026-2030 va changer pour votre dossier médical (Plan 2026-2030)",
-  "Hypertension et 'Mort Subite' : Les enseignements du Congrès de Cardiologie de Douala pour les Camerounais",
-  "Urgences Hospitalières à Yaoundé et Douala : Vers une prise en charge plus rapide grâce au projet 'Cure 2'"
+  "La Télémédecine à Douala : Comment le Plan Numérique 2026-2030 (PSNSN) désengorge les hôpitaux d'Akwa et Bonabéri",
+  "Bien-être mental au bureau à Douala : Adopter le 'fitness émotionnel' pour surmonter le stress urbain",
+  "Vrai ou Faux : Les régimes 'Détox' viraux de TikTok face aux bienfaits naturels du Ndolé et de la Papaye au Cameroun",
+  "Maladies Tropicales Négligées (MTN) : Gestes simples pour protéger sa famille de l'ulcère de Buruli et des filarioses à Douala",
+  "Football de quartier et Santé : Jouer en sécurité comme les Lions Indomptables après l'accord FECAFOOT-Croix-Rouge"
 ];
 
 function slugify(text: string) {

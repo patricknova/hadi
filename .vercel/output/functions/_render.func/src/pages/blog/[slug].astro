@@ -44,38 +44,39 @@ function getImageUrl(id: string, width = 1200) {
   const photoId = imagePool[index];
   return `https://images.unsplash.com/photo-${photoId}?auto=format&fit=crop&w=${width}&q=80`;
 }
+
+// Schema.org Data
+const postSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": post.title,
+  "description": post.excerpt,
+  "image": post.main_image,
+  "datePublished": post.published_at,
+  "author": {
+    "@type": "Organization",
+    "name": "Rédaction SantéDouala"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Hadi",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hadi.cm/favicon.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `https://hadi.cm/blog/${post.slug}`
+  }
+};
 ---
 
 <Layout 
   title={`${post.title.substring(0, 50)} | Blog Santé Douala`}
   description={post.meta_description?.substring(0, 155) || post.excerpt?.substring(0, 155)}
 >
-  <script type="application/ld+json" slot="head" define:vars={{ post }}>
-    {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "headline": post.title,
-      "description": post.excerpt,
-      "image": post.main_image,
-      "datePublished": post.published_at,
-      "author": {
-        "@type": "Organization",
-        "name": "Rédaction SantéDouala"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Hadi",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://hadi.cm/favicon.svg"
-        }
-      },
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": `https://hadi.cm/blog/${post.slug}`
-      }
-    }
-  </script>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(postSchema)} />
 
   <article class="max-w-4xl mx-auto px-4 py-12">
     <!-- Breadcrumb -->
@@ -102,7 +103,7 @@ function getImageUrl(id: string, width = 1200) {
     <header class="mb-12">
       <div class="aspect-video md:aspect-[21/9] rounded-3xl overflow-hidden mb-8 relative group shadow-2xl bg-gray-100">
         <img 
-          src={post.main_image.startsWith('http') ? post.main_image : getImageUrl(post.id, 1200)} 
+          src={(post.main_image && post.main_image.startsWith('http')) ? post.main_image : getImageUrl(post.id, 1200)} 
           alt={post.title}
           class="w-full h-full object-cover transition duration-700 group-hover:scale-105"
           loading="lazy"

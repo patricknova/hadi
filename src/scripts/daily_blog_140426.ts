@@ -7,6 +7,14 @@ const geminiKey = process.env.GEMINI_API_KEY!;
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+const TOPICS = [
+  "RESYMUC à Douala : La révolution des urgences à l'Hôpital Laquintinie et au HGOPED pour sauver plus de vies",
+  "Exploit médical à Douala : Le premier TAVI d'Afrique subsaharienne réussi à l'Hôpital Général",
+  "Santé de pointe à Nsimalen : Comment le futur centre AMCE d'Afreximbank va stopper les évacuations sanitaires",
+  "Budget Santé 2026 : Ce que les 391 milliards de FCFA de l'État changent pour la CSU à Bépanda et Akwa",
+  "Digitalisation 2030 : Comment le carnet de santé numérique va simplifier le suivi médical de Bonapriso à Logpom"
+];
+
 function slugify(text: string) {
   return text
     .toString()
@@ -19,8 +27,8 @@ function slugify(text: string) {
     .replace(/--+/g, '-');
 }
 
-async function generateSingleArticle(topic: string) {
-  console.log(`--- Retrying failed article: ${topic} ---`);
+async function generateArticle(topic: string, publishInHours: number) {
+  console.log(`--- Generating article via Gemini 2.5 Flash for: ${topic} ---`);
   
   const prompt = `
     Tu es un rédacteur médical expert pour SantéDouala.cm, spécialisé dans la santé au Cameroun.
@@ -28,8 +36,8 @@ async function generateSingleArticle(topic: string) {
     SUJET : ${topic}
     
     CONSIGNES DE CAMEROUNISATION :
-    1. Ancrage local : Mentionne obligatoirement des quartiers de Douala (Akwa, Bonapriso, Deïdo, Logpom, Bépanda, etc.).
-    2. Alimentation : Cite des aliments locaux (plantain, manioc, ndolè, huile de palme, kossam, safou, etc.).
+    1. Ancrage local : Mentionne obligatoirement des quartiers de Douala (Akwa, Bonapriso, Deïdo, Logpom, Bépanda, etc.) ou Yaoundé (Bastos, Mvan, Essos) selon le sujet.
+    2. Alimentation : Cite des aliments locaux si pertinent (plantain, manioc, ndolè, huile de palme, kossam, safou, etc.).
     3. Économie : Mentionne les coûts en FCFA et la réalité des soins de proximité.
     4. Ton : Bienveillant, informatif, accessible (pas trop clinique).
     5. VISUELS : Inclus dans le 'content' HTML au moins une balise <img> avec une URL de type : https://loremflickr.com/800/450/health,africa,<keyword> où <keyword> est un mot-clé pertinent en anglais. Ajoute une légende sous l'image avec <figcaption>.
@@ -43,11 +51,11 @@ async function generateSingleArticle(topic: string) {
       "meta_description": "Description optimisée pour Google",
       "image_keyword": "3-4 mots-clés anglais séparés par des virgules pour l'image principale (ex: 'african doctor, hospital, patient')"
     }
-
+    
     Réponds UNIQUEMENT avec le JSON brut.
   `;
 
-  const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash-lite:generateContent?key=${geminiKey}`;
+  const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${geminiKey}`;
 
   try {
     const response = await fetch(url, {
@@ -68,8 +76,13 @@ async function generateSingleArticle(topic: string) {
     text = text.replace(/```json/g, "").replace(/```/g, "").trim();
     
     const articleData = JSON.parse(text);
+    
     const slug = slugify(articleData.title);
+    const published_at = new Date();
+    published_at.setHours(published_at.getHours() + publishInHours);
 
+    const main_image = articleData.image_keyword; 
+    
     const { error } = await supabase
       .from('blog_posts')
       .insert({
@@ -79,32 +92,25 @@ async function generateSingleArticle(topic: string) {
         excerpt: articleData.excerpt,
         specialty_tag: articleData.specialty_tag,
         meta_description: articleData.meta_description,
-        main_image: articleData.image_keyword,
-        published_at: new Date().toISOString()
+        main_image: main_image,
+        published_at: published_at.toISOString()
       });
 
     if (error) {
       console.error(`Error saving article:`, error.message);
     } else {
-      console.log(`[+] Article successfully published: ${articleData.title}`);
+      console.log(`[+] Article published: ${articleData.title}`);
     }
   } catch (err) {
     console.error(`Failed to generate article:`, err);
   }
 }
 
-async function runRetry() {
-  const failedTopics = [
-    "Football de quartier et Santé : Jouer en sécurité comme les Lions Indomptables après l'accord FECAFOOT-Croix-Rouge",
-    "Vrai ou Faux : Les régimes 'Détox' viraux de TikTok face aux bienfaits naturels du Ndolé et de la Papaye au Cameroun",
-    "Bien-être mental au bureau à Douala : Adopter le 'fitness émotionnel' pour surmonter le stress urbain"
-  ];
-
-  for (const topic of failedTopics) {
-    await generateSingleArticle(topic);
-    // Wait 5 seconds between requests
-    await new Promise(resolve => setTimeout(resolve, 5000));
+async function runBatch() {
+  for (let i = 0; i < TOPICS.length; i++) {
+    await generateArticle(TOPICS[i], i * 2);
   }
+  process.exit(0);
 }
 
-runRetry();
+runBatch();

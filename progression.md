@@ -1,9 +1,9 @@
 # Progression du Projet : Hadi (CliniqDouala)
 
 ## 📊 État Global
-- **Phase Actuelle :** 🏁 Finalisation V1.0
-- **Progression Totale :** 99%
-- **Dernière Mise à Jour :** 29 Mars 2026
+- **Phase Actuelle :** 🚀 Production (v1.0.0)
+- **Progression Totale :** 100%
+- **Dernière Mise à Jour :** 17 Avril 2026
 
 ---
 
@@ -21,7 +21,7 @@
 - [x] Structure des dossiers du projet (`src/lib`, `src/components`, etc.)
 - [x] Intégration de l'API Google Places (Script d'importation via API New)
 
-### 🌐 Jalon 3 : Développement du Module Annuaire (Terminé)
+### ✅ Jalon 3 : Développement du Module Annuaire (Terminé)
 - [x] Installation et configuration de Tailwind CSS v4
 - [x] Création du Layout de base et styles globaux
 - [x] Page d'accueil avec affichage dynamique des 63+ cliniques et hôpitaux
@@ -35,11 +35,11 @@
 - [x] Importation automatique des avis Google Maps
 - [x] Affichage dynamique des notes (étoiles) et commentaires utilisateurs
 
-### 📈 Jalon 4 : Module Analytique & Dashboard (Terminé)
+### ✅ Jalon 4 : Module Analytique & Dashboard (Terminé)
 - [x] Tracking des événements (Vues, Appels, Itinéraires) vers Supabase
 - [x] Dashboard admin sécurisé avec statistiques en temps réel
 
-### 💰 Jalon 5 : Monétisation & Publicité (Terminé)
+### ✅ Jalon 5 : Monétisation & Publicité (Terminé)
 - [x] Gestion des niveaux de visibilité (Free, Standard, Premium, Sponsor)
 - [x] Tri prioritaire des cliniques selon le plan (Sponsor > Premium > Free)
 - [x] Badges visuels distinctifs pour les cliniques payantes
@@ -60,10 +60,20 @@
 - [x] Amélioration visuelle du hero et des cartes du blog (shadows, gradients, typography)
 - [x] Interface Admin de gestion des images du blog (possibilité de définir des URLs personnalisées)
 
+### ✅ Jalon 7 : Déploiement & Mise en Production (Terminé)
+- [x] Configuration de l'adaptateur Vercel (`@astrojs/vercel`)
+- [x] Déploiement sur Vercel ([hadi-tau.vercel.app](https://hadi-tau.vercel.app))
+- [x] Validation du SSL et du domaine personnalisé `hadi.cm` (en cours de propagation)
+
+### ✅ Jalon 8 : SEO & Indexation (En cours)
+- [x] Génération dynamique du `sitemap.xml` avec 119 URLs (cliniques, quartiers, blog).
+- [x] Script de mise à jour automatique du sitemap `src/scripts/generate_sitemap.ts`.
+- [ ] Soumission et validation dans Google Search Console.
+
 ---
 
 ## 🛠️ Fonctionnalités Réalisées
-- **Documentation :** PRD complet et Roadmap établis.
+- **Production :** Application entièrement déployée et fonctionnelle sur Vercel.
 
 ---
 
@@ -74,10 +84,16 @@
 - *05/04/2026* : Génération de 5 articles basés sur les tendances Google Trends (Polio, Mpox Littoral, Santé Numérique 2026, Cardiologie Douala, Projet Cure 2). Articles camerounisés et publiés avec succès.
 - *07/04/2026* : Correction des crashs Vercel (FUNCTION_INVOCATION_FAILED) via l'ajout de try/catch sur les routes SSR et sécurisation des agrégations analytics. Création de la page 404.
 - *08/04/2026* : Mise à jour du token de validation Google Search Console (`google-site-verification`) dans le Layout de base.
-
+- *10/04/2026* : Déploiement officiel en production sur Vercel.
+- *10/04/2026* : Génération et publication de 5 nouveaux articles basés sur les tendances locales (Mpox, Digitalisation 2030, Marché Santé, Médecine Traditionnelle, Diabète & Xylitol).
+- *13/04/2026* : Génération de 5 articles basés sur les tendances Google Trends 2026 (Plan Numérique PSNSN, Fitness Émotionnel, Détox vs Produits locaux, MTN/Buruli, Sport-Santé FECAFOOT). Utilisation de Gemini 2.5 Flash-Lite pour garantir la publication face à la charge API.
+- *14/04/2026* : Génération de 5 articles basés sur les tendances fortes (RESYMUC, Premier TAVI à Douala, Centre AMCE Nsimalen, Budget Santé 391 Mds FCFA, Digitalisation 2030). Articles publiés avec succès.
+- *15/04/2026* : Génération de 5 articles thématiques basés sur les tendances Google Trends 2026 (Plan PSNSN 29 Mds, CSU & Mutuelles, Sport FECAFOOT-Croix Rouge, Téléconsultation Logpom-Bastos, Guide Visite Papale Yaoundé). Utilisation de Gemini 2.5 Flash (850+ mots) pour garantir la qualité et la conformité locale.
+- *17/04/2026* : Génération et publication de 5 articles "camerounisés" basés sur les tendances actuelles (Visite Papale à Japoma, Vaccination Mpox Douala, Plan Santé Numérique 2026, Alerte Polio/Grippe, Choléra Douala 3ème).
 
 ---
 
 ## 🚀 Prochaines Étapes
-1. Continuer le monitoring des tendances quotidiennes.
-2. Optimiser le SEO des nouveaux articles générés.
+1. Monitorer les logs Vercel pour détecter d'éventuelles erreurs SSR.
+2. Continuer la génération quotidienne d'articles via le scheduler.
+3. Optimisation finale du Core Web Vitals.

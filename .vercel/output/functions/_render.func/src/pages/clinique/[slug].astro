@@ -7,23 +7,34 @@ export const prerender = false;
 
 const { slug } = Astro.params;
 
-// Fetch full clinic data
-const { data: clinic, error } = await supabase
-  .from('clinics_enriched')
-  .select('*')
-  .eq('slug', slug)
-  .single();
+let clinic: any = null;
+let reviews: any[] | null = [];
 
-if (error || !clinic) {
+try {
+  // Fetch full clinic data
+  const { data: clinicData, error: clinicError } = await supabase
+    .from('clinics_enriched')
+    .select('*')
+    .eq('slug', slug)
+    .single();
+
+  if (clinicError || !clinicData) {
+    return Astro.redirect('/404');
+  }
+  clinic = clinicData;
+
+  // Fetch reviews for this clinic
+  const { data: reviewsData } = await supabase
+    .from('reviews')
+    .select('*')
+    .eq('clinic_slug', slug)
+    .order('created_at', { ascending: false });
+  
+  reviews = reviewsData;
+} catch (err) {
+  console.error('Error fetching clinic details:', err);
   return Astro.redirect('/404');
 }
-
-// Fetch reviews for this clinic
-const { data: reviews } = await supabase
-  .from('reviews')
-  .select('*')
-  .eq('clinic_slug', slug)
-  .order('created_at', { ascending: false });
 
 // Formatting helpers
 const formatSpecialties = (types: string[] | null) => {
@@ -42,34 +53,35 @@ const geo = {
   city: Astro.request.headers.get('x-vercel-ip-city') || 'Douala',
   device: Astro.request.headers.get('user-agent')?.includes('Mobi') ? 'Mobile' : 'Desktop'
 };
+
+// Schema.org Data
+const clinicSchema = {
+  "@context": "https://schema.org",
+  "@type": "MedicalClinic",
+  "name": clinic.nom,
+  "description": clinic.description_custom || `${clinic.nom} est un établissement de santé de référence à Douala.`,
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Douala",
+    "addressCountry": "CM"
+  },
+  "url": `https://hadi.cm/clinique/${clinic.slug}`,
+  "medicalSpecialty": specialties,
+  ...(clinic.rating && {
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": clinic.rating,
+      "reviewCount": clinic.user_rating_count || 1
+    }
+  })
+};
 ---
 
 <Layout 
   title={`${clinic.nom} - Meilleure clinique à Douala (Santé)`}
   description={`Besoin de soins à ${clinic.nom} ? Trouvez l'adresse, les spécialités, les avis et les horaires de cet établissement de santé à Douala.`}
 >
-  <script type="application/ld+json" slot="head" define:vars={{ clinic, specialties }}>
-    {
-      "@context": "https://schema.org",
-      "@type": "MedicalClinic",
-      "name": clinic.nom,
-      "description": clinic.description_custom || `${clinic.nom} est un établissement de santé de référence à Douala.`,
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Douala",
-        "addressCountry": "CM"
-      },
-      "url": `https://hadi.cm/clinique/${clinic.slug}`,
-      "medicalSpecialty": specialties,
-      ...(clinic.rating && {
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": clinic.rating,
-          "reviewCount": clinic.user_rating_count || 1
-        }
-      })
-    }
-  </script>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(clinicSchema)} />
 
   <div class="max-w-5xl mx-auto px-4 py-8">
     <nav class="flex text-sm text-gray-500 mb-8" aria-label="Breadcrumb">
