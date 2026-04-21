@@ -13,7 +13,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 const BASE_URL = 'https://hadi-tau.vercel.app';
 
 async function generateSitemap() {
-  console.log("Génération du sitemap.xml pour HADI...");
+  console.log("Génération du sitemap-index.xml et sitemap-0.xml pour HADI...");
 
   const staticPages = [
     '',
@@ -26,7 +26,7 @@ async function generateSitemap() {
   const { data: clinics } = await supabase.from('clinics_enriched').select('slug');
   const clinicPages = clinics?.map(c => `/clinique/${c.slug}`) || [];
 
-  // 2. Récupérer les quartiers (uniques depuis clinics_enriched)
+  // 2. Récupérer les quartiers
   const { data: quartiersData } = await supabase.from('clinics_enriched').select('quartier');
   const uniqueQuartiers = [...new Set(quartiersData?.map(q => q.quartier).filter(Boolean))];
   const quartierPages = uniqueQuartiers.map(q => `/quartier/${q?.toLowerCase().replace(/\s+/g, '-')}`);
@@ -36,27 +36,42 @@ async function generateSitemap() {
   const blogPages = posts?.map(p => `/blog/${p.slug}`) || [];
 
   const allPages = [...staticPages, ...clinicPages, ...quartierPages, ...blogPages];
+  const today = new Date().toISOString().split('T')[0];
 
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+  // Générer le sitemap de contenu (sitemap-0.xml)
+  const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  ${allPages.map(page => {
-    // Ensure each part is encoded, but skip leading/trailing slashes for join
-    const encodedPage = page === '' ? '/' : page.split('/').map(part => encodeURIComponent(part)).join('/');
-    // Avoid double slashes if encodedPage starts with /
-    const fullUrl = `${BASE_URL}${encodedPage.startsWith('/') ? '' : '/'}${encodedPage}`;
-    return `
-  <url>
+${allPages.map(page => {
+    const encodedPath = page === '' ? '/' : page.split('/').map(part => encodeURIComponent(part)).join('/');
+    const fullUrl = `${BASE_URL}${encodedPath.startsWith('/') ? '' : '/'}${encodedPath}`;
+    return `  <url>
     <loc>${fullUrl}</loc>
-    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
+    <lastmod>${today}</lastmod>
     <changefreq>${page === '' ? 'daily' : 'weekly'}</changefreq>
     <priority>${page === '' ? '1.0' : (page.startsWith('/clinique') ? '0.8' : '0.5')}</priority>
   </url>`;
-  }).join('')}
+}).join('\n')}
 </urlset>`;
 
-  const outputPath = resolve('public/sitemap.xml');
-  writeFileSync(outputPath, sitemap);
-  console.log(`Sitemap généré avec succès dans ${outputPath} (${allPages.length} URLs)`);
+  // Générer l'index (sitemap-index.xml)
+  const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap>
+    <loc>${BASE_URL}/sitemap-0.xml</loc>
+    <lastmod>${today}</lastmod>
+  </sitemap>
+</sitemapindex>`;
+
+  // Sauvegarder les fichiers
+  writeFileSync(resolve('public/sitemap-0.xml'), sitemapContent.trim());
+  writeFileSync(resolve('public/sitemap-index.xml'), sitemapIndex.trim());
+  
+  // On garde aussi sitemap.xml pour compatibilité si besoin, mais on le fait pointer sur l'index
+  writeFileSync(resolve('public/sitemap.xml'), sitemapContent.trim());
+
+  console.log(`Sitemaps générés avec succès (${allPages.length} URLs).`);
+  console.log(`- Index: ${BASE_URL}/sitemap-index.xml`);
+  console.log(`- Contenu: ${BASE_URL}/sitemap-0.xml`);
 }
 
 generateSitemap();

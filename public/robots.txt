@@ -3,4 +3,5 @@ Allow: /
 Disallow: /admin/
 Disallow: /admin
 
+Sitemap: https://hadi-tau.vercel.app/sitemap-index.xml
 Sitemap: https://hadi-tau.vercel.app/sitemap.xml
