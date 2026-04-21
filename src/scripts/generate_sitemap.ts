@@ -40,10 +40,13 @@ async function generateSitemap() {
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   ${allPages.map(page => {
-    const encodedPage = page.split('/').map(part => encodeURIComponent(part)).join('/');
+    // Ensure each part is encoded, but skip leading/trailing slashes for join
+    const encodedPage = page === '' ? '/' : page.split('/').map(part => encodeURIComponent(part)).join('/');
+    // Avoid double slashes if encodedPage starts with /
+    const fullUrl = `${BASE_URL}${encodedPage.startsWith('/') ? '' : '/'}${encodedPage}`;
     return `
   <url>
-    <loc>${BASE_URL}${encodedPage}</loc>
+    <loc>${fullUrl}</loc>
     <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
     <changefreq>${page === '' ? 'daily' : 'weekly'}</changefreq>
     <priority>${page === '' ? '1.0' : (page.startsWith('/clinique') ? '0.8' : '0.5')}</priority>
