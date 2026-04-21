@@ -11,14 +11,24 @@ let clinics: any[] = [];
 
 try {
   // Fetch 3 clinics matching the specialty
+  // Note: .contains is used for array columns in Supabase
   const { data, error } = await supabase
     .from('clinics_enriched')
-    .select('nom, slug, rating, google_photos, quartier')
+    .select('nom, slug, rating, google_photos, quartier, specialites')
+    .contains('specialites', [specialtyTag])
     .order('rating', { ascending: false })
     .limit(3);
   
-  if (!error) {
-    clinics = data || [];
+  if (!error && data && data.length > 0) {
+    clinics = data;
+  } else {
+    // Fallback: if no specific match, show top rated ones
+    const { data: fallbackData } = await supabase
+      .from('clinics_enriched')
+      .select('nom, slug, rating, google_photos, quartier')
+      .order('rating', { ascending: false })
+      .limit(3);
+    clinics = fallbackData || [];
   }
 } catch (err) {
   console.error('RelatedClinics fetch error:', err);

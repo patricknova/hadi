@@ -66,7 +66,7 @@
 - [x] Validation du SSL et du domaine personnalisé `hadi.cm` (en cours de propagation)
 
 ### ✅ Jalon 8 : SEO & Indexation (En cours)
-- [x] Génération dynamique du `sitemap.xml` avec 119 URLs (cliniques, quartiers, blog).
+- [x] Génération dynamique du `sitemap.xml` avec 128 URLs (cliniques, quartiers, blog).
 - [x] Script de mise à jour automatique du sitemap `src/scripts/generate_sitemap.ts`.
 - [ ] Soumission et validation dans Google Search Console.
 
@@ -93,6 +93,7 @@
 - *21/04/2026 :* Mise à jour du fichier robots.txt pour pointer vers le domaine actif hadi-tau.vercel.app.
 - *21/04/2026 :* Génération et publication de 5 articles thématiques (PSNSN 2026, Choléra/Polio, Hypertension & Ndolé, Vaccination 2026, Stress urbain). Insertion manuelle effectuée suite à une saturation temporaire de l'API Gemini.
 - *21/04/2026 :* Mise à jour des types Supabase (`src/types/supabase.ts`) via `mcp_supabase_generate_typescript_types` pour corriger les erreurs de typage TypeScript. Vérification et succès du build Astro (`npm run build`). Détection et correction des erreurs de résolution DNS lors du build.
+- *21/04/2026 :* Optimisation de la synergie Blog-Annuaire : Implémentation du filtrage réel par spécialité dans le composant `RelatedClinics.astro`. Standardisation des tags de spécialités dans la table `blog_posts`. Création d'un script de tagging automatique des cliniques par mots-clés (`src/scripts/tag_specialties.ts`).
 
 ---
 
