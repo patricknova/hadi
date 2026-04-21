@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /admin
 
 Sitemap: https://hadi-tau.vercel.app/sitemap.xml

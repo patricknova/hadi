@@ -19,8 +19,7 @@ async function generateSitemap() {
     '',
     '/blog',
     '/quartiers',
-    '/contact',
-    '/404'
+    '/contact'
   ];
 
   // 1. Récupérer les cliniques
