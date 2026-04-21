@@ -13,7 +13,7 @@ export default defineConfig({
     assets: '_assets'
   },
   adapter: vercel(),
-  integrations: [sitemap()],
+  integrations: [],
   vite: {
     plugins: [tailwindcss()]
   }
