@@ -3,7 +3,7 @@
 ## 📊 État Global
 - **Phase Actuelle :** 🚀 Production (v1.0.0)
 - **Progression Totale :** 100%
-- **Dernière Mise à Jour :** 17 Avril 2026
+- **Dernière Mise à Jour :** 21 Avril 2026
 
 ---
 
@@ -90,6 +90,8 @@
 - *14/04/2026* : Génération de 5 articles basés sur les tendances fortes (RESYMUC, Premier TAVI à Douala, Centre AMCE Nsimalen, Budget Santé 391 Mds FCFA, Digitalisation 2030). Articles publiés avec succès.
 - *15/04/2026* : Génération de 5 articles thématiques basés sur les tendances Google Trends 2026 (Plan PSNSN 29 Mds, CSU & Mutuelles, Sport FECAFOOT-Croix Rouge, Téléconsultation Logpom-Bastos, Guide Visite Papale Yaoundé). Utilisation de Gemini 2.5 Flash (850+ mots) pour garantir la qualité et la conformité locale.
 - *17/04/2026* : Génération et publication de 5 articles "camerounisés" basés sur les tendances actuelles (Visite Papale à Japoma, Vaccination Mpox Douala, Plan Santé Numérique 2026, Alerte Polio/Grippe, Choléra Douala 3ème).
+- *21/04/2026* : Mise à jour du fichier `robots.txt` pour pointer vers le domaine actif `hadi-tau.vercel.app`.
+- *21/04/2026* : Génération et publication de 5 articles thématiques (PSNSN 2026, Choléra/Polio, Hypertension & Ndolé, Vaccination 2026, Stress urbain). Insertion manuelle effectuée suite à une saturation temporaire de l'API Gemini.
 
 ---
 

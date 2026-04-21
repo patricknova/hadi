@@ -10,7 +10,7 @@ const supabaseUrl = process.env.PUBLIC_SUPABASE_URL || '';
 const supabaseKey = process.env.PUBLIC_SUPABASE_ANON_KEY || '';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-const BASE_URL = 'https://hadi.cm';
+const BASE_URL = 'https://hadi-tau.vercel.app';
 
 async function generateSitemap() {
   console.log("Génération du sitemap.xml pour HADI...");

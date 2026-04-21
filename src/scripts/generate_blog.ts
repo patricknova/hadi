@@ -8,11 +8,11 @@ const geminiKey = process.env.GEMINI_API_KEY!;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const TOPICS = [
-  "La Télémédecine à Douala : Comment le Plan Numérique 2026-2030 (PSNSN) désengorge les hôpitaux d'Akwa et Bonabéri",
-  "Bien-être mental au bureau à Douala : Adopter le 'fitness émotionnel' pour surmonter le stress urbain",
-  "Vrai ou Faux : Les régimes 'Détox' viraux de TikTok face aux bienfaits naturels du Ndolé et de la Papaye au Cameroun",
-  "Maladies Tropicales Négligées (MTN) : Gestes simples pour protéger sa famille de l'ulcère de Buruli et des filarioses à Douala",
-  "Football de quartier et Santé : Jouer en sécurité comme les Lions Indomptables après l'accord FECAFOOT-Croix-Rouge"
+  "Digitalisation des dossiers médicaux à Douala : Le Plan PSNSN 2026 au service des patients de Laquintinie et HGOPED",
+  "Prévention du Choléra et de la Polio après les pluies à Douala : Les bons gestes à Deïdo et Bépanda",
+  "Hypertension et Alimentation locale : Savourer le Ndolé et le Safou sans risquer sa tension à Logpom",
+  "Calendrier de Vaccination 2026 au Cameroun : Ce que les parents de Bonabéri et Akwa doivent savoir",
+  "Stress urbain et Fitness Émotionnel : Pourquoi marcher à Bonapriso est meilleur pour le cœur que le bruit d'Akwa"
 ];
 
 function slugify(text: string) {
@@ -55,7 +55,7 @@ async function generateArticle(topic: string, publishInHours: number) {
     Réponds UNIQUEMENT avec le JSON brut.
   `;
 
-  const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${geminiKey}`;
+  const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash-lite:generateContent?key=${geminiKey}`;
 
   try {
     const response = await fetch(url, {

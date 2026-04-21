@@ -74,7 +74,7 @@ const postSchema = {
 
 <Layout 
   title={`${post.title.substring(0, 50)} | Blog Santé Douala`}
-  description={post.meta_description?.substring(0, 155) || post.excerpt?.substring(0, 155)}
+  description={post.meta_description?.substring(0, 155) || `Conseils santé Douala — ${post.title}. Découvrez cet article d'expert sur Hadi.`}
 >
   <script type="application/ld+json" slot="head" set:html={JSON.stringify(postSchema)} />
 
