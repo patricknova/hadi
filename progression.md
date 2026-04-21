@@ -90,12 +90,15 @@
 - *14/04/2026* : Génération de 5 articles basés sur les tendances fortes (RESYMUC, Premier TAVI à Douala, Centre AMCE Nsimalen, Budget Santé 391 Mds FCFA, Digitalisation 2030). Articles publiés avec succès.
 - *15/04/2026* : Génération de 5 articles thématiques basés sur les tendances Google Trends 2026 (Plan PSNSN 29 Mds, CSU & Mutuelles, Sport FECAFOOT-Croix Rouge, Téléconsultation Logpom-Bastos, Guide Visite Papale Yaoundé). Utilisation de Gemini 2.5 Flash (850+ mots) pour garantir la qualité et la conformité locale.
 - *17/04/2026* : Génération et publication de 5 articles "camerounisés" basés sur les tendances actuelles (Visite Papale à Japoma, Vaccination Mpox Douala, Plan Santé Numérique 2026, Alerte Polio/Grippe, Choléra Douala 3ème).
-- *21/04/2026* : Mise à jour du fichier `robots.txt` pour pointer vers le domaine actif `hadi-tau.vercel.app`.
-- *21/04/2026* : Génération et publication de 5 articles thématiques (PSNSN 2026, Choléra/Polio, Hypertension & Ndolé, Vaccination 2026, Stress urbain). Insertion manuelle effectuée suite à une saturation temporaire de l'API Gemini.
+- *21/04/2026 :* Mise à jour du fichier robots.txt pour pointer vers le domaine actif hadi-tau.vercel.app.
+- *21/04/2026 :* Génération et publication de 5 articles thématiques (PSNSN 2026, Choléra/Polio, Hypertension & Ndolé, Vaccination 2026, Stress urbain). Insertion manuelle effectuée suite à une saturation temporaire de l'API Gemini.
+- *21/04/2026 :* Mise à jour des types Supabase (`src/types/supabase.ts`) via `mcp_supabase_generate_typescript_types` pour corriger les erreurs de typage TypeScript. Vérification et succès du build Astro (`npm run build`). Détection et correction des erreurs de résolution DNS lors du build.
 
 ---
 
 ## 🚀 Prochaines Étapes
 1. Monitorer les logs Vercel pour détecter d'éventuelles erreurs SSR.
 2. Continuer la génération quotidienne d'articles via le scheduler.
-3. Optimisation finale du Core Web Vitals.
+3. Finaliser le déploiement via Git Push vers le dépôt distant.
+4. Optimisation finale du Core Web Vitals.
+

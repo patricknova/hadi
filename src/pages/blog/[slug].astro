@@ -7,6 +7,10 @@ export const prerender = false;
 
 const { slug } = Astro.params;
 
+if (!slug) {
+  return Astro.redirect('/404');
+}
+
 let post: any = null;
 
 try {
@@ -14,7 +18,7 @@ try {
   const { data, error } = await supabase
     .from('blog_posts')
     .select('*')
-    .eq('slug', slug)
+    .eq('slug', slug as string)
     .single();
   
   if (error || !data) throw new Error('Post not found');

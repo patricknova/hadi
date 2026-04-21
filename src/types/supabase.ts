@@ -41,44 +41,134 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_posts: {
+        Row: {
+          content: string
+          created_at: string | null
+          excerpt: string | null
+          id: string
+          main_image: string | null
+          meta_description: string | null
+          published_at: string | null
+          slug: string
+          specialty_tag: string | null
+          title: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          excerpt?: string | null
+          id?: string
+          main_image?: string | null
+          meta_description?: string | null
+          published_at?: string | null
+          slug: string
+          specialty_tag?: string | null
+          title: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          excerpt?: string | null
+          id?: string
+          main_image?: string | null
+          meta_description?: string | null
+          published_at?: string | null
+          slug?: string
+          specialty_tag?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
+      campaigns: {
+        Row: {
+          active: boolean | null
+          created_at: string | null
+          end_date: string | null
+          id: string
+          image_url: string | null
+          page_placement: string | null
+          specialty_target: string | null
+          start_date: string | null
+          target_url: string | null
+          title: string
+        }
+        Insert: {
+          active?: boolean | null
+          created_at?: string | null
+          end_date?: string | null
+          id?: string
+          image_url?: string | null
+          page_placement?: string | null
+          specialty_target?: string | null
+          start_date?: string | null
+          target_url?: string | null
+          title: string
+        }
+        Update: {
+          active?: boolean | null
+          created_at?: string | null
+          end_date?: string | null
+          id?: string
+          image_url?: string | null
+          page_placement?: string | null
+          specialty_target?: string | null
+          start_date?: string | null
+          target_url?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
       clinics_enriched: {
         Row: {
           description_custom: string | null
           featured_order: number | null
+          google_photos: string[] | null
           id: string
           nom: string
           photos_custom: string[] | null
           place_id: string | null
           plan: string | null
           plan_expiry: string | null
+          quartier: string | null
+          rating: number | null
           slug: string
           specialites: string[] | null
+          user_rating_count: number | null
           verified: boolean | null
         }
         Insert: {
           description_custom?: string | null
           featured_order?: number | null
+          google_photos?: string[] | null
           id?: string
           nom: string
           photos_custom?: string[] | null
           place_id?: string | null
           plan?: string | null
           plan_expiry?: string | null
+          quartier?: string | null
+          rating?: number | null
           slug: string
           specialites?: string[] | null
+          user_rating_count?: number | null
           verified?: boolean | null
         }
         Update: {
           description_custom?: string | null
           featured_order?: number | null
+          google_photos?: string[] | null
           id?: string
           nom?: string
           photos_custom?: string[] | null
           place_id?: string | null
           plan?: string | null
           plan_expiry?: string | null
+          quartier?: string | null
+          rating?: number | null
           slug?: string
           specialites?: string[] | null
+          user_rating_count?: number | null
           verified?: boolean | null
         }
         Relationships: []
@@ -90,6 +180,7 @@ export type Database = {
           clinic_slug: string
           comment: string | null
           created_at: string | null
+          google_review_name: string | null
           id: string
           rating: number
         }
@@ -99,6 +190,7 @@ export type Database = {
           clinic_slug: string
           comment?: string | null
           created_at?: string | null
+          google_review_name?: string | null
           id?: string
           rating: number
         }
@@ -108,6 +200,7 @@ export type Database = {
           clinic_slug?: string
           comment?: string | null
           created_at?: string | null
+          google_review_name?: string | null
           id?: string
           rating?: number
         }
