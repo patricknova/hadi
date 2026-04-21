@@ -7,12 +7,12 @@ import vercel from '@astrojs/vercel';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://hadi-tau.vercel.app',
+  base: '/',
   output: 'static',
-  adapter: vercel({
-    webAnalytics: {
-      enabled: true,
-    },
-  }),
+  build: {
+    assets: '_assets'
+  },
+  adapter: vercel(),
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()]
