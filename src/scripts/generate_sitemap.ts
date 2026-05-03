@@ -12,6 +12,18 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 const BASE_URL = 'https://hadi-tau.vercel.app';
 
+function slugify(text: string) {
+  return text
+    .toString()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w-]+/g, '')
+    .replace(/--+/g, '-');
+}
+
 async function generateSitemap() {
   console.log("Génération du sitemap-index.xml et sitemap-0.xml pour HADI...");
 
@@ -29,7 +41,7 @@ async function generateSitemap() {
   // 2. Récupérer les quartiers
   const { data: quartiersData } = await supabase.from('clinics_enriched').select('quartier');
   const uniqueQuartiers = [...new Set(quartiersData?.map(q => q.quartier).filter(Boolean))];
-  const quartierPages = uniqueQuartiers.map(q => `/quartier/${q?.toLowerCase().replace(/\s+/g, '-')}`);
+  const quartierPages = uniqueQuartiers.map(q => `/quartier/${slugify(q || '')}`);
 
   // 3. Récupérer les articles de blog
   const { data: posts } = await supabase.from('blog_posts').select('slug');

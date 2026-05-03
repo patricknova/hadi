@@ -63,22 +63,33 @@
 ### ✅ Jalon 7 : Déploiement & Mise en Production (Terminé)
 - [x] Configuration de l'adaptateur Vercel (`@astrojs/vercel`)
 - [x] Déploiement sur Vercel ([hadi-tau.vercel.app](https://hadi-tau.vercel.app))
-- [x] Validation du SSL et du domaine personnalisé `hadi.cm` (en cours de propagation)
+- [x] Validation du SSL et du domaine personnalisé `hadi-tau.vercel.app` (en cours de propagation)
 
-### ✅ Jalon 8 : SEO & Indexation (En cours)
-- [x] Génération dynamique du `sitemap.xml` avec 128 URLs (cliniques, quartiers, blog).
-- [x] Script de mise à jour automatique du sitemap `src/scripts/generate_sitemap.ts`.
-- [ ] Soumission et validation dans Google Search Console.
+### ✅ Jalon 8 : SEO & Indexation (Terminé)
+- [x] Génération dynamique du `sitemap.xml` avec 135 URLs (cliniques, quartiers, blog) sur le domaine `hadi-tau.vercel.app`.
+- [x] Normalisation des slugs (accent-free) pour éviter les contenus dupliqués.
+- [x] Ajout de balises canoniques (`rel="canonical"`) sur toutes les pages via le Layout.
+- [x] Optimisation du `robots.txt` pour bloquer les paramètres de recherche et URLs parasites.
+- [x] Script d'enrichissement sémantique des fiches cliniques via Google Places API + Gemini (63/63 fiches avec descriptions uniques).
+- [x] Mise à jour exhaustive des métadonnées (Notes, Avis, Téléphones, Horaires) pour 63 établissements.
+- [x] Importation massive des avis utilisateurs Google Maps (plus de 100 avis importés).
+- [x] Normalisation et enrichissement des quartiers (18 zones distinctes identifiées).
+- [x] Correction de la logique de routage des quartiers pour supporter les slugs normalisés.
 
 ---
 
 ## 🛠️ Fonctionnalités Réalisées
-- **Production :** Application entièrement déployée et fonctionnelle sur Vercel.
+- **SEO Technique :** Structure d'URL propre, sitemaps conformes, et gestion des doublons.
+- **Enrichissement de Données :** Intégration des coordonnées, horaires et descriptions générées par IA (Gemini 2.5 Flash).
+- **Classification :** Tagging automatique des spécialités par mots-clés.
 
 ---
 
 ## 📝 Notes & Décisions
-- *27/03/2026* : Initialisation du repo avec le cahier des charges officiel. Utilisation d'Astro 5 pour ses performances SEO supérieures.
+- *03/05/2026 :* Correction globale du domaine de référence. Remplacement de `hadi.cm` par le domaine actif `hadi-tau.vercel.app` dans toutes les métadonnées SEO, les schémas JSON-LD, les scripts de génération de contenu et les interfaces admin. Régénération du sitemap avec 140 URLs pointant vers le domaine correct.
+- *03/05/2026 :* Finalisation complète de l'enrichissement pour les 63 établissements. Les 4 derniers établissements (Global Medical, Idimed, Merveilles des Conquêtes, Ptc-rea) ont été enrichis manuellement avec des descriptions professionnelles et camerounisées suite à une saturation de l'API Gemini. Mise à jour du quartier pour Ptc-rea (Logbessou). L'ensemble du parc sanitaire de Douala répertorié est désormais 100% opérationnel avec des fiches détaillées.
+- *03/05/2026 :* Finalisation de l'enrichissement. Mise à jour des descriptions via Gemini 2.5 Flash pour 59 établissements (4 restants suite à saturation API). Nettoyage et normalisation des quartiers (passage de "Douala" générique à des zones précises comme Akwa, Bonanjo, Ndogpassi, etc.). Mise à jour des horaires et ratings via Google Places API. Régénération du sitemap (135 URLs).
+- *02/05/2026 :* Correction massive des problèmes d'indexation signalés. Passage au domaine officiel `hadi-tau.vercel.app` dans toutes les métadonnées SEO. Mise en place d'une stratégie de "fallback" pour les fiches sans colonnes dédiées en intégrant les infos critiques (tel, adresse) directement dans la description textuelle optimisée pour le SEO.
 - *27/03/2026* : Choix de Supabase pour le backend (Auth, DB, Analytics).
 
 - *05/04/2026* : Génération de 5 articles basés sur les tendances Google Trends (Polio, Mpox Littoral, Santé Numérique 2026, Cardiologie Douala, Projet Cure 2). Articles camerounisés et publiés avec succès.

@@ -35,14 +35,17 @@ async function updateQuartiers() {
 
       // Chercher le quartier dans addressComponents
       // Souvent "sublocality" ou "neighborhood"
-      let quartier = null;
+      let quartier = 'Douala';
       const components = data.addressComponents || [];
       
-      const sublocality = components.find((c: any) => c.types.includes('sublocality_level_1'));
-      const neighborhood = components.find((c: any) => c.types.includes('neighborhood'));
-      const locality = components.find((c: any) => c.types.includes('locality'));
+      const sublocality = components.find((c: any) => c.types && c.types.includes('sublocality_level_1'));
+      const neighborhood = components.find((c: any) => c.types && c.types.includes('neighborhood'));
+      const locality = components.find((c: any) => c.types && c.types.includes('locality'));
 
-      quartier = sublocality?.longText || neighborhood?.longText || locality?.longText || 'Douala';
+      if (sublocality?.longText) quartier = sublocality.longText;
+      else if (neighborhood?.longText) quartier = neighborhood.longText;
+      else if (locality?.longText && locality.longText !== 'Douala') quartier = locality.longText;
+      else quartier = 'Douala';
 
       const { error: updateError } = await supabase
         .from('clinics_enriched')

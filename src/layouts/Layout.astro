@@ -17,6 +17,7 @@ const { title, description = "Hadi (CliniqDouala) - Annuaire des cliniques et h√
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="google-site-verification" content="qg6-OX_glKN7BEC8uCHu8bcT2MCpyqyHP9lEArkPc7s" />
 		<meta name="generator" content={Astro.generator} />
+		<link rel="canonical" href={new URL(Astro.url.pathname, 'https://hadi-tau.vercel.app').href.replace(/\/$/, '') || 'https://hadi-tau.vercel.app'} />
 		<title>{title} | Hadi</title>
 		<meta name="description" content={description} />
 		<slot name="head" />

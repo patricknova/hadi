@@ -15,7 +15,7 @@ async function fetchPlaceDetails(placeId: string) {
     headers: {
       'Content-Type': 'application/json',
       'X-Goog-Api-Key': googleApiKey,
-      'X-Goog-FieldMask': 'id,internationalPhoneNumber,rating,userRatingCount'
+      'X-Goog-FieldMask': 'id,internationalPhoneNumber,formattedAddress,rating,userRatingCount,regularOpeningHours,googleMapsUri'
     }
   });
 
@@ -23,29 +23,40 @@ async function fetchPlaceDetails(placeId: string) {
   return await response.json();
 }
 
-async function updateSafeDetails() {
+async function updateAllClinicDetails() {
   const { data: clinics, error } = await supabase
     .from('clinics_enriched')
     .select('id, place_id, nom');
 
-  if (error) return;
+  if (error) {
+    console.error('Error fetching clinics:', error);
+    return;
+  }
+
+  console.log(`Updating details for ${clinics.length} clinics...`);
 
   for (const clinic of clinics) {
     if (!clinic.place_id) continue;
     
-    console.log(`Updating ${clinic.nom}...`);
+    console.log(`Fetching details for ${clinic.nom}...`);
     const details = await fetchPlaceDetails(clinic.place_id);
     
     if (details) {
-      // Only update columns we ARE SURE exist based on [slug].astro usage
-      // [slug].astro uses: rating, user_rating_count
+      const updateData: any = {
+        rating: details.rating,
+        user_rating_count: details.userRatingCount,
+        phone_number: details.internationalPhoneNumber,
+        adresse: details.formattedAddress,
+        google_maps_url: details.googleMapsUri
+      };
+
+      if (details.regularOpeningHours?.weekdayDescriptions) {
+        updateData.horaires = details.regularOpeningHours.weekdayDescriptions.join('\n');
+      }
+
       const { error: updateError } = await supabase
         .from('clinics_enriched')
-        .update({
-          rating: details.rating,
-          user_rating_count: details.userRatingCount,
-          // phone_number might not exist yet if migration failed
-        })
+        .update(updateData)
         .eq('id', clinic.id);
 
       if (updateError) {
@@ -56,6 +67,7 @@ async function updateSafeDetails() {
     }
     await new Promise(resolve => setTimeout(resolve, 200));
   }
+  console.log("✅ All clinics updated!");
 }
 
-updateSafeDetails();
+updateAllClinicDetails();

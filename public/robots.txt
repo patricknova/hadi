@@ -2,6 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /admin
+Disallow: /*?* # Block search parameters and sort filters
 
 Sitemap: https://hadi-tau.vercel.app/sitemap-index.xml
 Sitemap: https://hadi-tau.vercel.app/sitemap.xml

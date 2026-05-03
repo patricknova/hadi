@@ -34,7 +34,7 @@ async function generateArticle(topic: string, index: number) {
   console.log(`--- Génération de l'article ${index+1}/5 : ${topic} ---`);
   
   const prompt = `
-    Tu es un rédacteur médical expert pour le site Hadi (Hadi.cm), spécialisé dans la santé au Cameroun.
+    Tu es un rédacteur médical expert pour le site Hadi (hadi-tau.vercel.app), spécialisé dans la santé au Cameroun.
     
     SUJET : ${topic}
     

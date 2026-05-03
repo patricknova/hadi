@@ -2,23 +2,31 @@
 import Layout from '../../layouts/Layout.astro';
 import ClinicCard from '../../components/ClinicCard.astro';
 import { supabase } from '../../lib/supabase';
+import { slugify } from '../../lib/utils';
 
 export const prerender = false;
 
 const { slug } = Astro.params;
 
-// Reconstituer le nom du quartier à partir du slug (méthode simple)
-const quartierName = slug?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-
 let clinics: any[] | null = [];
+let quartierName = '';
 
 try {
-  // Fetch clinics for this specific quartier
+  // 1. Récupérer tous les quartiers uniques pour trouver celui qui correspond au slug
+  const { data: allQuartiers } = await supabase.from('clinics_enriched').select('quartier');
+  const uniqueQuartiers = [...new Set(allQuartiers?.map(q => q.quartier).filter(Boolean))];
+  
+  quartierName = uniqueQuartiers.find(q => slugify(q || '') === slug) || '';
+
+  if (!quartierName) {
+    return Astro.redirect('/404');
+  }
+
+  // 2. Fetch clinics for this specific quartier
   const { data, error } = await supabase
     .from('clinics_enriched')
     .select('*')
-    // On utilise ilike pour être plus flexible avec le slug
-    .ilike('quartier', quartierName || '')
+    .eq('quartier', quartierName)
     .order('nom', { ascending: true });
 
   if (error) throw error;

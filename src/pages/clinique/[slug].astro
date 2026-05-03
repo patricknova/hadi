@@ -65,7 +65,7 @@ const clinicSchema = {
     "addressLocality": "Douala",
     "addressCountry": "CM"
   },
-  "url": `https://hadi.cm/clinique/${clinic.slug}`,
+  "url": `https://hadi-tau.vercel.app/clinique/${clinic.slug}`,
   "medicalSpecialty": specialties,
   ...(clinic.rating && {
     "aggregateRating": {
@@ -253,9 +253,28 @@ const clinicSchema = {
           <ul class="space-y-4">
             <li class="flex items-start gap-4">
               <span class="bg-blue-50 p-2 rounded-lg text-blue-600">⏰</span>
-              <div>
+              <div class="flex-1">
                 <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Horaires</p>
-                <p class="text-gray-700 font-medium italic">Ouvert 24h/24 (Urgence)</p>
+                {clinic.horaires ? (
+                  <div class="text-gray-700 text-sm mt-1 space-y-1">
+                    {clinic.horaires.split('\n').map((line: string) => (
+                      <p class={line.toLowerCase().includes(new Date().toLocaleDateString('fr-FR', {weekday: 'long'}).toLowerCase()) ? "font-bold text-blue-700" : ""}>
+                        {line}
+                      </p>
+                    ))}
+                  </div>
+                ) : (
+                  <p class="text-gray-700 font-medium italic">Ouvert 24h/24 (Urgence)</p>
+                )}
+              </div>
+            </li>
+            <li class="flex items-start gap-4">
+              <span class="bg-red-50 p-2 rounded-lg text-red-600">📍</span>
+              <div>
+                <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Adresse</p>
+                <p class="text-gray-700 font-medium text-sm">
+                  {clinic.adresse || "Douala, Cameroun"}
+                </p>
               </div>
             </li>
             <li class="flex items-start gap-4">
