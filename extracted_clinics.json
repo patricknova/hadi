@@ -1,0 +1,387 @@
+[
+  {
+    "name": "Hôpital Général de Douala",
+    "address": "Mbédi, Douala",
+    "phone_number": null,
+    "specialties": ["Hôpital général"],
+    "insurance_partners": ["NSIA", "AXA", "CNPS", "ACTIVA", "Zenithe", "SAAR"]
+  },
+  {
+    "name": "Hôpital Laquintinie",
+    "address": "Akwa, Douala",
+    "phone_number": null,
+    "specialties": ["Hôpital général"],
+    "insurance_partners": ["NSIA", "AXA", "CNPS", "ACTIVA", "SAAR"]
+  },
+  {
+    "name": "Hôpital Gynéco-Obstétrique et Pédiatrique",
+    "address": "Yassa, Douala",
+    "phone_number": null,
+    "specialties": ["Gynécologie", "Pédiatrie"],
+    "insurance_partners": ["NSIA", "CNPS", "AXA"]
+  },
+  {
+    "name": "Hôpital de District de New-Bell",
+    "address": "New-Bell, Douala",
+    "phone_number": "233 343 102",
+    "specialties": ["District"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Hôpital de District de Bonassama",
+    "address": "Bonabéri, Douala",
+    "phone_number": "699 821 857",
+    "specialties": ["District"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Hôpital de District de Logbaba",
+    "address": "Logbaba, Douala",
+    "phone_number": "691 00 26 18",
+    "specialties": ["District"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Hôpital de District de Deido",
+    "address": "Deido, Douala",
+    "phone_number": null,
+    "specialties": ["District"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Centre Médical de la Police",
+    "address": "Camp Berto, Douala",
+    "phone_number": "699 834 676",
+    "specialties": ["Médecine générale"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "CMA Bonamoussadi",
+    "address": "Bonamoussadi, Douala",
+    "phone_number": "691 798 364",
+    "specialties": ["CMA"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "CMA Kotto",
+    "address": "Kotto, Douala",
+    "phone_number": "691 798 364",
+    "specialties": ["CMA"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Hôpital Ad Lucem Bali",
+    "address": "Bali, Douala",
+    "phone_number": "697 000 703",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "AXA", "ACTIVA", "CNPS"]
+  },
+  {
+    "name": "Ad Lucem Bonamoussadi",
+    "address": "Bonamoussadi, Douala",
+    "phone_number": "683 811 531",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "AXA", "CNPS"]
+  },
+  {
+    "name": "Hôpital Ad Lucem Bonabéri",
+    "address": "Bonabéri, Douala",
+    "phone_number": "699 000 000",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "AXA", "CNPS"]
+  },
+  {
+    "name": "Hôpital Catholique Saint Albert le Grand",
+    "address": "Bonabéri, Douala",
+    "phone_number": null,
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "CNPS", "AXA"]
+  },
+  {
+    "name": "Mbingo Baptist Health Hospital (Mboppi)",
+    "address": "Mboppi, Douala",
+    "phone_number": null,
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA"]
+  },
+  {
+    "name": "Polyclinique IDIMED",
+    "address": "Bonapriso, Douala",
+    "phone_number": "694 72 26 52",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "ACTIVA", "AXA", "CNPS", "Zenithe"]
+  },
+  {
+    "name": "Clinique Koumassi",
+    "address": "Bali, Douala",
+    "phone_number": "699 99 65 79",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "ACTIVA", "AXA", "CNPS"]
+  },
+  {
+    "name": "Daniel Muna Memorial Clinic (DMMC)",
+    "address": "Bonanjo, Douala",
+    "phone_number": "693 17 24 52",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "ACTIVA", "AXA", "CNPS", "Zenithe"]
+  },
+  {
+    "name": "Polyclinique Bordeaux Douala",
+    "address": "Koumassi, Douala",
+    "phone_number": "650 10 34 48",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "ACTIVA", "CNPS"]
+  },
+  {
+    "name": "Polyclinique de la Gare Le Nid",
+    "address": "Bessengue, Douala",
+    "phone_number": "699 98 77 75",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "ACTIVA", "CNPS"]
+  },
+  {
+    "name": "Polyclinique de Poitiers",
+    "address": "Deido, Douala",
+    "phone_number": "675 01 81 91",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Polyclinique du Rond Point",
+    "address": "Bonamoussadi, Douala",
+    "phone_number": "699 68 15 33",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Clinique de Bonapriso",
+    "address": "Bonapriso, Douala",
+    "phone_number": "699 910 850",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "ACTIVA", "CNPS", "AXA"]
+  },
+  {
+    "name": "Clinique de Gaulle",
+    "address": "Bonapriso, Douala",
+    "phone_number": "696 18 03 67",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Clinique Dr Boum",
+    "address": "Akwa, Douala",
+    "phone_number": "699 96 04 11",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "ACTIVA", "CNPS"]
+  },
+  {
+    "name": "Clinique Médico-Chirurgicale Le Berceau",
+    "address": "Akwa, Douala",
+    "phone_number": "696 090 549",
+    "specialties": ["Chirurgie"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Clinique La Source",
+    "address": "Bonateki, Douala",
+    "phone_number": "696 20 19 14",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "AXA", "CNPS"]
+  },
+  {
+    "name": "Clinique Elisa",
+    "address": "Bonamoussadi, Douala",
+    "phone_number": "699 605 840",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Clinique Saint Michel",
+    "address": "Akwa, Douala",
+    "phone_number": "691 275 863",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "ACTIVA", "CNPS"]
+  },
+  {
+    "name": "Clinique La Providence",
+    "address": "Kotto, Douala",
+    "phone_number": "694 423 004",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Centre Hospitalier Hôtel-Dieu Douala",
+    "address": "Logbessou, Douala",
+    "phone_number": "655 900 449",
+    "specialties": ["Hospitalier"],
+    "insurance_partners": ["NSIA", "ACTIVA", "CNPS", "AXA"]
+  },
+  {
+    "name": "Clinique du Soleil",
+    "address": "Logpom, Douala",
+    "phone_number": "650 342 165",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Clinique Canadienne La Référence",
+    "address": "Yassa, Douala",
+    "phone_number": "699 826 447",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Clinique de l'Aéroport",
+    "address": "Bonapriso, Douala",
+    "phone_number": "696 71 71 71",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "CNPS", "ACTIVA"]
+  },
+  {
+    "name": "Clinique de l'Espérance",
+    "address": "Cité des Palmiers, Douala",
+    "phone_number": "677 998 739",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Clinique Cœur et Vie",
+    "address": "Ndogbong, Douala",
+    "phone_number": "698 285 736",
+    "specialties": ["Cardiologie"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Clinique Les Béatitudes",
+    "address": "Nyalla/Yassa, Douala",
+    "phone_number": "698 044 422",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Clinique de Japoma",
+    "address": "Japoma, Douala",
+    "phone_number": "657 127 412",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Clinique Médicale de l'Océan",
+    "address": "Makepe, Douala",
+    "phone_number": "696 778 271",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Clinique du Gros Chêne",
+    "address": "Akwa, Douala",
+    "phone_number": "699 921 397",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "ACTIVA", "CNPS"]
+  },
+  {
+    "name": "Clinique Dr Kouam Samuel",
+    "address": "Bali, Douala",
+    "phone_number": "677 393 531",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Clinique Etienno",
+    "address": "Bepanda, Douala",
+    "phone_number": "677 615 770",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Premier Health Centre",
+    "address": "Bonadiwoto, Douala",
+    "phone_number": "697 978 170",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Clinique Ath's Clinic",
+    "address": "Cité des Palmiers, Douala",
+    "phone_number": "657 656 337",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Centre Médical Solidarité",
+    "address": "Total Anatole, Douala",
+    "phone_number": "698 51 60 62",
+    "specialties": ["Médecine générale"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Centre Médical Saint Hilaire",
+    "address": "Bonamoussadi, Douala",
+    "phone_number": "677 725 626",
+    "specialties": ["Médecine générale"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Centre Médico-Chirurgicale de Bonantone",
+    "address": "Deido, Douala",
+    "phone_number": "691 846 784",
+    "specialties": ["Chirurgie"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Centre Pédiatrique de Bonapriso",
+    "address": "Bonapriso, Douala",
+    "phone_number": "695 502 537",
+    "specialties": ["Pédiatrie"],
+    "insurance_partners": ["NSIA", "ACTIVA", "CNPS"]
+  },
+  {
+    "name": "Cameroon Oncology Center",
+    "address": "Bekoko, Douala",
+    "phone_number": "654 003 434",
+    "specialties": ["Oncologie"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Centre Cardiovasculaire de Douala (CCVD)",
+    "address": "Bonapriso, Douala",
+    "phone_number": null,
+    "specialties": ["Cardiologie"],
+    "insurance_partners": ["ACTIVA", "AXA", "CNPS", "Zenithe"]
+  },
+  {
+    "name": "Clinique Pédiatrique Saint Petersbourg",
+    "address": "Bonabéri, Douala",
+    "phone_number": "677 65 31 18",
+    "specialties": ["Pédiatrie", "Gynécologie"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Peace and Comfort Medical Foundation",
+    "address": "Bonabéri, Douala",
+    "phone_number": "671 529 100",
+    "specialties": ["Polyvalent"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Centre Médical de l'Emergence Divine",
+    "address": "Bepanda, Douala",
+    "phone_number": "677 785 028",
+    "specialties": ["Médecine générale"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Centre Médical Ergocare",
+    "address": "Nyalla, Douala",
+    "phone_number": "679 016 301",
+    "specialties": ["Médecine du travail"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  },
+  {
+    "name": "Centre ORL de Douala",
+    "address": "Kotto Antenne, Douala",
+    "phone_number": "697 156 556",
+    "specialties": ["ORL"],
+    "insurance_partners": ["NSIA", "CNPS"]
+  }
+]

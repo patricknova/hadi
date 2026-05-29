@@ -71,6 +71,8 @@
 - [x] Ajout de balises canoniques (`rel="canonical"`) sur toutes les pages via le Layout.
 - [x] Optimisation du `robots.txt` pour bloquer les paramètres de recherche et URLs parasites.
 - [x] Script d'enrichissement sémantique des fiches cliniques via Google Places API + Gemini (63/63 fiches avec descriptions uniques).
+- [x] Extraction exhaustive des données (55 établissements) depuis le PDF `hopitaux_cliniques_douala.pdf` vers `extracted_clinics.json` (Noms, Quartiers, Tél, Spécialités, Assurances).
+- [x] Création d'un fichier de mapping `clinic_mapping.json` pour faire correspondre les noms PDF et les noms de la base de données.
 - [x] Mise à jour exhaustive des métadonnées (Notes, Avis, Téléphones, Horaires) pour 63 établissements.
 - [x] Importation massive des avis utilisateurs Google Maps (plus de 100 avis importés).
 - [x] Normalisation et enrichissement des quartiers (18 zones distinctes identifiées).
@@ -101,6 +103,7 @@
 - *14/04/2026* : Génération de 5 articles basés sur les tendances fortes (RESYMUC, Premier TAVI à Douala, Centre AMCE Nsimalen, Budget Santé 391 Mds FCFA, Digitalisation 2030). Articles publiés avec succès.
 - *15/04/2026* : Génération de 5 articles thématiques basés sur les tendances Google Trends 2026 (Plan PSNSN 29 Mds, CSU & Mutuelles, Sport FECAFOOT-Croix Rouge, Téléconsultation Logpom-Bastos, Guide Visite Papale Yaoundé). Utilisation de Gemini 2.5 Flash (850+ mots) pour garantir la qualité et la conformité locale.
 - *17/04/2026* : Génération et publication de 5 articles "camerounisés" basés sur les tendances actuelles (Visite Papale à Japoma, Vaccination Mpox Douala, Plan Santé Numérique 2026, Alerte Polio/Grippe, Choléra Douala 3ème).
+- *29/05/2026 :* Enrichissement massif des données à partir du PDF `hopitaux_cliniques_douala.pdf`. Extraction de 55 établissements, mise à jour des téléphones, adresses, spécialités et intégration des assurances acceptées directement dans les descriptions personnalisées pour 18 établissements appariés avec succès. Optimisation de la recherche et de la pertinence des fiches établissements.
 - *21/04/2026 :* Mise à jour du fichier robots.txt pour pointer vers le domaine actif hadi-tau.vercel.app.
 - *21/04/2026 :* Génération et publication de 5 articles thématiques (PSNSN 2026, Choléra/Polio, Hypertension & Ndolé, Vaccination 2026, Stress urbain). Insertion manuelle effectuée suite à une saturation temporaire de l'API Gemini.
 - *21/04/2026 :* Mise à jour des types Supabase (`src/types/supabase.ts`) via `mcp_supabase_generate_typescript_types` pour corriger les erreurs de typage TypeScript. Vérification et succès du build Astro (`npm run build`). Détection et correction des erreurs de résolution DNS lors du build.

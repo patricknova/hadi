@@ -11,7 +11,8 @@ async function fixClinicColumns() {
     "ALTER TABLE clinics_enriched ADD COLUMN IF NOT EXISTS phone_number TEXT;",
     "ALTER TABLE clinics_enriched ADD COLUMN IF NOT EXISTS adresse TEXT;",
     "ALTER TABLE clinics_enriched ADD COLUMN IF NOT EXISTS horaires TEXT;",
-    "ALTER TABLE clinics_enriched ADD COLUMN IF NOT EXISTS google_maps_url TEXT;"
+    "ALTER TABLE clinics_enriched ADD COLUMN IF NOT EXISTS google_maps_url TEXT;",
+    "ALTER TABLE clinics_enriched ADD COLUMN IF NOT EXISTS assurances TEXT[] DEFAULT '{}';"
   ];
 
   for (const query of queries) {
