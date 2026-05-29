@@ -41,9 +41,13 @@ const { title, description = "Hadi (CliniqDouala) - Annuaire des cliniques et h�
 			<slot />
 		</main>
 
-		<footer class="bg-white border-t border-gray-200 py-8 mt-12">
-			<div class="container mx-auto px-4 text-center text-gray-600">
-				<p>&copy; {new Date().getFullYear()} Hadi - Annuaire Digital des Cliniques de Douala.</p>
+		<footer class="bg-white border-t border-gray-200 py-12 mt-12">
+			<div class="container mx-auto px-4 text-center">
+				<div class="mb-6">
+					<p class="text-xl font-bold text-blue-600 mb-2">🏥 Hadi</p>
+					<p class="text-gray-600 italic">Makepe Missoke, entrée chefferie, Douala</p>
+				</div>
+				<p class="text-gray-500">&copy; {new Date().getFullYear()} Hadi - Annuaire Digital des Cliniques de Douala.</p>
 				<p class="mt-2 text-sm italic text-gray-400">Améliorer l'accès aux soins de santé à Douala.</p>
 			</div>
 		</footer>
