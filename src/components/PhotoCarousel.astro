@@ -1,53 +1,150 @@
 ---
 interface Props {
-  photos: string[];
+  googlePhotos?: string[];
+  customPhotos?: string[];
   clinicName: string;
 }
 
-const { photos, clinicName } = Astro.props;
+const { googlePhotos = [], customPhotos = [], clinicName } = Astro.props;
 const googleApiKey = import.meta.env.GOOGLE_PLACES_API_KEY;
 
-// Generate Google Places Photo URLs
-const photoUrls = photos.map(photoName => 
-  googleApiKey 
-    ? `https://places.googleapis.com/v1/${photoName}/media?key=${googleApiKey}&maxHeightPx=800`
-    : `https://loremflickr.com/800/600/hospital,clinic`
-);
+// Prioritize custom photos (Supabase Storage), then fallback to Google
+let photoUrls = customPhotos && customPhotos.length > 0 ? customPhotos : [];
+
+if (photoUrls.length === 0 && googlePhotos && googlePhotos.length > 0) {
+  photoUrls = googlePhotos.map(photoName => 
+    googleApiKey 
+      ? `https://places.googleapis.com/v1/${photoName}/media?key=${googleApiKey}&maxHeightPx=800`
+      : `https://loremflickr.com/800/600/hospital,clinic`
+  );
+}
+
+const finalPhotoUrls = photoUrls.length > 0 ? photoUrls : [];
 ---
 
 <div class="relative group">
-  {photoUrls.length > 0 ? (
-    <div class="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide gap-4 pb-4">
-      {photoUrls.map((url, index) => (
-        <div class="flex-none w-full md:w-3/4 lg:w-2/3 snap-center">
-          <div class="aspect-video rounded-3xl overflow-hidden bg-gray-100 border border-gray-100 shadow-sm">
-            <img 
-              src={url} 
-              alt={`${clinicName} - Photo ${index + 1}`}
-              class="w-full h-full object-cover transition duration-500 group-hover:scale-105"
-              loading={index === 0 ? "eager" : "lazy"}
-              onerror="this.src='https://loremflickr.com/800/600/hospital,building'"
-            />
+  {finalPhotoUrls.length > 0 ? (
+    <div class="relative">
+      <div 
+        id="carousel-container"
+        class="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide gap-4 pb-4 scroll-smooth"
+      >
+        {finalPhotoUrls.map((url, index) => (
+          <div class="flex-none w-full md:w-5/6 lg:w-3/4 snap-center slide-item">
+            <div class="aspect-video rounded-3xl overflow-hidden bg-gray-100 border border-gray-100 shadow-sm relative group/item">
+              <img 
+                src={url} 
+                alt={`${clinicName} - Photo ${index + 1}`}
+                class="w-full h-full object-cover transition duration-700 group-hover/item:scale-110"
+                loading={index === 0 ? "eager" : "lazy"}
+                onerror="this.src='https://loremflickr.com/800/600/hospital,building'"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover/item:opacity-100 transition-opacity duration-500"></div>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+
+      {finalPhotoUrls.length > 1 && (
+        <>
+          <button 
+            id="prev-btn"
+            class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur-md rounded-full shadow-xl flex items-center justify-center text-blue-600 opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-blue-600 hover:text-white z-10 -translate-x-4 group-hover:translate-x-0 cursor-pointer"
+            aria-label="Photo précédente"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          
+          <button 
+            id="next-btn"
+            class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur-md rounded-full shadow-xl flex items-center justify-center text-blue-600 opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-blue-600 hover:text-white z-10 translate-x-4 group-hover:translate-x-0 cursor-pointer"
+            aria-label="Photo suivante"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </>
+      )}
     </div>
   ) : (
     <div class="aspect-video rounded-3xl bg-gray-50 border-2 border-dashed border-gray-200 flex flex-col items-center justify-center text-gray-400 p-8 text-center">
-      <span class="text-4xl mb-2">📸</span>
-      <p class="font-medium">Aucune photo réelle disponible pour le moment.</p>
-      <p class="text-sm">Vous travaillez ici ? Ajoutez des photos sur Google Maps.</p>
+      <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+        <span class="text-4xl">📸</span>
+      </div>
+      <p class="font-bold text-gray-900">Aucune photo réelle disponible</p>
+      <p class="text-sm max-w-xs mt-2 text-gray-500">Nous n'avons pas encore de photos pour cet établissement.</p>
     </div>
   )}
   
-  {photoUrls.length > 1 && (
-    <div class="flex justify-center gap-2 mt-2">
-      {photoUrls.map((_, i) => (
-        <div class="w-1.5 h-1.5 rounded-full bg-gray-300"></div>
+  {finalPhotoUrls.length > 1 && (
+    <div class="flex justify-center gap-2 mt-4">
+      {finalPhotoUrls.map((_, i) => (
+        <button 
+          class="w-2 h-2 rounded-full bg-gray-200 transition-all duration-300 cursor-pointer hover:bg-gray-400" 
+          data-dot={i}
+          aria-label={`Aller à la photo ${i + 1}`}
+        ></button>
       ))}
     </div>
   )}
 </div>
+
+<script>
+  function setupCarousel() {
+    const container = document.getElementById('carousel-container');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const dots = document.querySelectorAll('[data-dot]');
+
+    if (!container) return;
+
+    const getScrollAmount = () => {
+      const firstItem = container.querySelector('.slide-item');
+      return firstItem ? firstItem.clientWidth + 16 : container.clientWidth; // 16 is gap-4
+    };
+
+    prevBtn?.addEventListener('click', () => {
+      container.scrollLeft -= getScrollAmount();
+    });
+
+    nextBtn?.addEventListener('click', () => {
+      container.scrollLeft += getScrollAmount();
+    });
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        container.scrollLeft = index * getScrollAmount();
+      });
+    });
+
+    container.addEventListener('scroll', () => {
+      const scrollAmount = getScrollAmount();
+      const index = Math.round(container.scrollLeft / scrollAmount);
+      
+      dots.forEach((dot, i) => {
+        if (i === index) {
+          dot.classList.remove('bg-gray-200');
+          dot.classList.add('bg-blue-600', 'w-4');
+        } else {
+          dot.classList.remove('bg-blue-600', 'w-4');
+          dot.classList.add('bg-gray-200');
+        }
+      });
+    });
+
+    // Initial dot state
+    if (dots[0]) {
+      dots[0].classList.add('bg-blue-600', 'w-4');
+    }
+  }
+
+  // Support for Astro view transitions or dynamic loading
+  setupCarousel();
+  document.addEventListener('astro:after-swap', setupCarousel);
+</script>
 
 <style>
   .scrollbar-hide::-webkit-scrollbar {

@@ -110,6 +110,17 @@
 - *21/04/2026 :* Mise à jour des types Supabase (`src/types/supabase.ts`) via `mcp_supabase_generate_typescript_types` pour corriger les erreurs de typage TypeScript. Vérification et succès du build Astro (`npm run build`). Détection et correction des erreurs de résolution DNS lors du build.
 - *21/04/2026 :* Optimisation de la synergie Blog-Annuaire : Implémentation du filtrage réel par spécialité dans le composant `RelatedClinics.astro`. Standardisation des tags de spécialités dans la table `blog_posts`. Création d'un script de tagging automatique des cliniques par mots-clés (`src/scripts/tag_specialties.ts`).
 
+### ✅ Jalon 9 : Stockage Photos Stable (Terminé)
+- [x] Création d'un bucket Supabase Storage `clinic-photos` avec accès public.
+- [x] Développement et exécution d'un script de migration massif (`src/scripts/migrate_to_storage.ts`).
+- [x] Téléchargement et hébergement local (Supabase) des photos Google Places pour éviter l'expiration des liens.
+- [x] Mise à jour de la table `clinics_enriched` avec la colonne `photos_custom`.
+- [x] Refonte complète du composant `PhotoCarousel.astro` :
+    - [x] Priorisation des photos hébergées sur Supabase.
+    - [x] Ajout de boutons de navigation (Précédent/Suivant) et indicateurs (dots).
+    - [x] Amélioration de l'expérience utilisateur (UX) sur mobile et desktop.
+- [x] Mise à jour de `RelatedClinics.astro` pour utiliser les photos stables.
+
 ---
 
 ## 🚀 Prochaines Étapes
